@@ -3,8 +3,6 @@ import { getTickets } from '../service/ticketService'
 import TicketCard from './TicketCard'
 import './TicketList.css'
 
-import CreateTicketForm from './CreateTicketForm'   // add import
-
 function TicketList() {
   const [tickets, setTickets] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -28,7 +26,6 @@ function TicketList() {
   // Show one card per ticket
   return (
     <div>
-          <CreateTicketForm onTicketCreated={loadTickets} />
     <div className="ticket-grid">
       
       {tickets.map(ticket => (

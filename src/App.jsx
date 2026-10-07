@@ -1,16 +1,18 @@
 import './App.css'
-import Header from './component/Header'
-import TicketList from './component/TicketList'
+import { Routes, Route } from 'react-router-dom'
+import MainLayout from './layouts/MainLayout'
+import TicketsPage from './pages/TicketsPage'
+import CreateTicketPage from './pages/CreateTicketPage'
 
 function App() {
   return (
-    <div>
-      <Header />
-      <main className="content">
-        <h2>Tickets</h2>
-        <TicketList />
-      </main>
-    </div>
+    <Routes>
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<TicketsPage />} />
+        <Route path="/tickets" element={<TicketsPage />} />
+        <Route path="/tickets/new" element={<CreateTicketPage />} />
+      </Route>
+    </Routes>
   );
 }
 

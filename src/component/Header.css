@@ -1,0 +1,10 @@
+.app-header {
+  background-color: #16213e;
+  color: #ffffff;
+  padding: 16px 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.app-header h1 {
+  font-size: 22px;
+}

@@ -1,0 +1,10 @@
+.content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 32px;
+}
+
+.content h2 {
+  margin-bottom: 20px;
+  color: #16213e;
+}

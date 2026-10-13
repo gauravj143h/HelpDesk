@@ -5,11 +5,16 @@ import MainLayout from './layouts/MainLayout'
 import HomePage from './pages/HomePage'
 import TicketsPage from './pages/TicketsPage'
 import CreateTicketPage from './pages/CreateTicketPage'
+import LoginPage from './pages/LoginPage'
 
 function App() {
   return (
     <AuthProvider>
       <Routes>
+        {/* Login page — no header, full screen */}
+        <Route path="/login" element={<LoginPage />} />
+
+        {/* Everything inside MainLayout gets the header + nav */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/tickets" element={<TicketsPage />} />

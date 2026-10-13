@@ -29,14 +29,6 @@ export async function getTickets(page = 0, size = 5) {
   return data;   // return the whole page object (content + totalPages + number + etc.)
 }
 
-export async function getUsers() {
-  const response = await fetch('http://localhost:8080/api/Users/getalluser', {
-    headers: authHeaders(),
-  });
-  if (!response.ok) throw new Error('Failed to fetch users');
-  return await response.json();
-}
-
 export async function createTicket(ticket, userId) {
   const response = await fetch(`${BASE_URL}?id=${userId}`, {
     method: 'POST',

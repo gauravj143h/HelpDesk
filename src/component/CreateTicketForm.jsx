@@ -1,38 +1,27 @@
-import { useState, useEffect } from 'react'
-import { createTicket, getUsers } from '../service/ticketService'
+import { useState } from 'react'
+import { createTicket } from '../service/ticketService'
+import { useAuth } from '../context/AuthContext'
 import './CreateTicketForm.css'
 
 function CreateTicketForm({ onTicketCreated }) {
-  // One piece of state per form field
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState('LOW');
-  const [userId, setUserId] = useState('');
 
-  // State to hold the list of users for the dropdown
-  const [users, setUsers] = useState([]);
+  // Get the logged-in user's ID automatically — no need to pick from a list
+  const { user } = useAuth();
 
-  // Load the users once, when the form appears
-  useEffect(() => {
-    getUsers()
-      .then(data => setUsers(data))
-      .catch(error => console.log(error));
-  }, []);
-
-  // Runs when the form is submitted
   async function handleSubmit(e) {
-    e.preventDefault();   // stop the browser from reloading the page
+    e.preventDefault();
 
     const newTicket = { title, description, priority };
 
     try {
-      await createTicket(newTicket, userId);   // send to backend
-      // clear the form
+      await createTicket(newTicket, user.id);   // use logged-in user's ID
       setTitle('');
       setDescription('');
       setPriority('LOW');
-      setUserId('');
-      onTicketCreated();   // tell the parent to refresh the list
+      onTicketCreated();
     } catch (error) {
       console.log('Error creating ticket:', error);
     }
@@ -61,13 +50,6 @@ function CreateTicketForm({ onTicketCreated }) {
         <option value="MEDIUM">Medium</option>
         <option value="HIGH">High</option>
         <option value="URGENT">Urgent</option>
-      </select>
-
-      <select value={userId} onChange={(e) => setUserId(e.target.value)} required>
-        <option value="">Select user</option>
-        {users.map(user => (
-          <option key={user.id} value={user.id}>{user.name}</option>
-        ))}
       </select>
 
       <button type="submit">Create Ticket</button>

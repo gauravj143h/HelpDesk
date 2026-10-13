@@ -27,3 +27,34 @@
   color: #ffffff;
   border-bottom: 2px solid #ffffff;
 }
+
+/* User info + logout on the right */
+.app-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-info {
+  font-size: 14px;
+  color: #c5cbe0;
+}
+
+.user-role {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.logout-btn {
+  padding: 6px 14px;
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}

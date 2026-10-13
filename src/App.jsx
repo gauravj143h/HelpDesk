@@ -23,7 +23,11 @@ function App() {
         }>
           <Route path="/" element={<HomePage />} />
           <Route path="/tickets" element={<TicketsPage />} />
-          <Route path="/tickets/new" element={<CreateTicketPage />} />
+          <Route path="/tickets/new" element={
+            <ProtectedRoute allowedRoles={['USER', 'ADMIN']}>
+              <CreateTicketPage />
+            </ProtectedRoute>
+          } />
         </Route>
       </Routes>
     </AuthProvider>

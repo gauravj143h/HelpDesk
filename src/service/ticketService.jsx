@@ -23,20 +23,30 @@ function handleUnauthorized(response) {
   }
 }
 
-// This function gets tickets from the backend
-export async function getTickets(page = 0, size = 5) {
+// ADMIN — gets all tickets (paginated)
+export async function getAllTickets(page = 0, size = 5) {
   const response = await fetch(
     `${BASE_URL}/GetTicketPagenumber?page=${page}&size=${size}`,
     { headers: authHeaders() }
   );
 
   handleUnauthorized(response);
-  if (!response.ok) {
-    throw new Error('Failed to fetch tickets');
-  }
+  if (!response.ok) throw new Error('Failed to fetch tickets');
 
-  const data = await response.json();
-  return data;   // return the whole page object (content + totalPages + number + etc.)
+  return await response.json();   // { content, totalPages, number, ... }
+}
+
+// USER — gets only tickets created by this user (plain list, not paginated)
+export async function getTicketsByUserId(userId) {
+  const response = await fetch(
+    `${BASE_URL}/GetTicketUserId?id=${userId}`,
+    { headers: authHeaders() }
+  );
+
+  handleUnauthorized(response);
+  if (!response.ok) throw new Error('Failed to fetch tickets');
+
+  return await response.json();   // returns an array of tickets
 }
 
 export async function createTicket(ticket, userId) {

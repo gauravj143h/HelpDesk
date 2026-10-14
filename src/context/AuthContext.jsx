@@ -10,8 +10,17 @@ const AuthContext = createContext(null);
 function parseToken(token) {
   try {
     const payload = token.split('.')[1];           // grab the middle part
-    const json = atob(payload);                     // decode from base64
-    return JSON.parse(json);                        // parse into an object
+    // JWTs use base64url (no padding, different chars) — fix it for atob()
+    const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+    const json = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
+    const claims = JSON.parse(json);
+    console.log('JWT claims:', claims);            // helpful for debugging — remove later
+    return claims;
   } catch {
     return null;
   }

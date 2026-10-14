@@ -1,17 +1,26 @@
 // The base address of your backend
 const BASE_URL = 'http://localhost:8080/api/ticket';
 
-// Import getToken so we can prove who we are on every request
-import { getToken } from './authService';
+// Import getToken and logout so we can prove who we are and handle expiry
+import { getToken, logout } from './authService';
 
 // Helper: builds headers with the JWT token included
-// Every fetch call will use this so the backend knows who's asking
 function authHeaders() {
   const token = getToken();
   return {
     'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
+}
+
+// Helper: check if the backend rejected us (401 = token expired or invalid)
+// If so, clear the token and send the user back to the login page
+function handleUnauthorized(response) {
+  if (response.status === 401) {
+    logout();
+    window.location.href = '/login';
+    throw new Error('Session expired — please log in again');
+  }
 }
 
 // This function gets tickets from the backend
@@ -21,6 +30,7 @@ export async function getTickets(page = 0, size = 5) {
     { headers: authHeaders() }
   );
 
+  handleUnauthorized(response);
   if (!response.ok) {
     throw new Error('Failed to fetch tickets');
   }
@@ -35,6 +45,7 @@ export async function createTicket(ticket, userId) {
     headers: authHeaders(),
     body: JSON.stringify(ticket),
   });
+  handleUnauthorized(response);
   if (!response.ok) throw new Error('Failed to create ticket');
   return await response.json();
 }

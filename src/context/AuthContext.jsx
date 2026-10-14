@@ -29,9 +29,9 @@ export function AuthProvider({ children }) {
       const claims = parseToken(token);
       if (claims) {
         setUser({
-          id: claims.userId,         // your backend puts the user id here
-          email: claims.sub,         // "sub" is the standard JWT field for the subject (usually email)
-          role: claims.role,         // your backend puts the role here
+          id: claims.userId ?? claims.id,   // works whether backend calls it "userId" or "id"
+          email: claims.sub,                 // "sub" is the standard JWT field for the subject (usually email)
+          role: claims.role,                 // your backend puts the role here
         });
       }
     }
@@ -43,7 +43,7 @@ export function AuthProvider({ children }) {
     const token = await apiLogin(email, password);
     const claims = parseToken(token);
     setUser({
-      id: claims.userId,
+      id: claims.userId ?? claims.id,
       email: claims.sub,
       role: claims.role,
     });

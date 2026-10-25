@@ -20,7 +20,7 @@ function TicketList() {
           setTotalPages(data.totalPages);
         })
         .catch(error => console.log(error));
-    } else {
+    } else if(user.role === 'USER') {
       // USER sees only their own tickets (plain list)
       getTicketsByUserId(user.id)
         .then(data => {
@@ -29,6 +29,16 @@ function TicketList() {
         })
         .catch(error => console.log(error));
     }
+    else{
+       getTicketsBySupportId(user.id)
+        .then(data => {
+          setTickets(data);
+          setTotalPages(1);   // no pagination from this endpoint
+        })
+        .catch(error => console.log(error));
+    }
+    }
+    
   }
 
   useEffect(() => {
@@ -66,6 +76,6 @@ function TicketList() {
       )}
     </div>
   );
-}
+
 
 export default TicketList;

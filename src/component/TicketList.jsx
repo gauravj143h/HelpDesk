@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getAllTickets, getTicketsByUserId } from '../service/ticketService'
+import { getAllTickets, getTicketsByUserId, getTicketsBySupportId } from '../service/ticketService'
 import { useAuth } from '../context/AuthContext'
 import TicketCard from './TicketCard'
 import './TicketList.css'
@@ -37,8 +37,6 @@ function TicketList() {
         })
         .catch(error => console.log(error));
     }
-    }
-    
   }
 
   useEffect(() => {
@@ -76,6 +74,6 @@ function TicketList() {
       )}
     </div>
   );
-
+}
 
 export default TicketList;

@@ -36,12 +36,18 @@ export function AuthProvider({ children }) {
     const token = getToken();
     if (token) {
       const claims = parseToken(token);
-      if (claims) {
-        setUser({
-          id: claims.userId ?? claims.id,   // works whether backend calls it "userId" or "id"
-          email: claims.sub,                 // "sub" is the standard JWT field for the subject (usually email)
-          role: claims.role,                 // your backend puts the role here
-        });
+      if (claims && claims.exp) {
+        const now = Math.floor(Date.now() / 1000);
+        if (claims.exp < now) {
+          // Token expired — clear it and send to login
+          apiLogout();
+        } else {
+          setUser({
+            id: claims.userId ?? claims.id,
+            email: claims.sub,
+            role: claims.role,
+          });
+        }
       }
     }
     setLoading(false);

@@ -7,6 +7,7 @@ import TicketsPage from './pages/TicketsPage'
 import CreateTicketPage from './pages/CreateTicketPage'
 import LoginPage from './pages/LoginPage'
 import ProtectedRoute from './component/ProtectedRoute'
+import Ticket from './pages/Ticket'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           </ProtectedRoute>
         }>
           <Route path="/" element={<HomePage />} />
+          <Route path="/ticket" element={<Ticket />} />
           <Route path="/tickets" element={<TicketsPage />} />
           <Route path="/tickets/new" element={
             <ProtectedRoute allowedRoles={['USER', 'ADMIN']}>

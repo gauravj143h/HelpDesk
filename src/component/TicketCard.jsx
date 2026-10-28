@@ -1,10 +1,13 @@
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext';
 import './TicketCard.css'
 
 function TicketCard({ ticket }) {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
   return (
-    <div className="ticket-card">
+    <div className="ticket-card" onClick={() => navigate(`/ticket/${ticket.id}`)}>
       <h3>{ticket.title}</h3>
         <p>
          Status: <span className={`status-badge status-${ticket.status}`}>{ticket.status}</span>

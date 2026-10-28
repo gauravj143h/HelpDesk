@@ -61,6 +61,18 @@ export async function getTicketsBySupportId(supportId) {
   return await response.json();   // returns an array of tickets
 }
 
+export async function getTicketById(ticketId) {
+  const response = await fetch(
+    `${BASE_URL}/GetTicketById?id=${ticketId}`,
+    { headers: authHeaders() }
+  );
+
+  handleUnauthorized(response);
+  if (!response.ok) throw new Error('Failed to fetch ticket');
+
+  return await response.json();
+}
+
 export async function createTicket(ticket, userId) {
   const response = await fetch(`${BASE_URL}?id=${userId}`, {
     method: 'POST',

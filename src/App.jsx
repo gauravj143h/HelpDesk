@@ -23,7 +23,7 @@ function App() {
           </ProtectedRoute>
         }>
           <Route path="/" element={<HomePage />} />
-          <Route path="/ticket" element={<Ticket />} />
+          <Route path="/ticket/:id" element={<Ticket />} />
           <Route path="/tickets" element={<TicketsPage />} />
           <Route path="/tickets/new" element={
             <ProtectedRoute allowedRoles={['USER', 'ADMIN']}>
